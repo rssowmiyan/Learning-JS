@@ -1,16 +1,16 @@
 let randomNumber = Math.floor(Math.random() * 100) + 1;
+console.log(`random number -->${randomNumber}`)
 let x = document.getElementById("finished");
-console.log(randomNumber)
-      const guesses = document.querySelector('.guesses');
-      const lastResult = document.querySelector('.lastResult');
-      const lowOrHi = document.querySelector('.lowOrHi');
-      const guessSubmit = document.querySelector('.guessSubmit');
-      const guessField = document.querySelector('.guessField');
-      let guessCount = 1;
-      let resetButton;
+const guesses = document.querySelector('.guesses');
+const lastResult = document.querySelector('.lastResult');
+const lowOrHi = document.querySelector('.lowOrHi');
+const guessSubmit = document.querySelector('.guessSubmit');
+const guessField = document.querySelector('.guessField');
+let guessCount = 1;
+let resetButton;
 
       function checkGuess() {
-        // convert obj to int
+        // convert string to int
         let userGuess = Number(guessField.value);
         if (guessCount === 1) {
           guesses.textContent = 'Previous guesses: ';
@@ -44,6 +44,17 @@ console.log(randomNumber)
 
       guessSubmit.addEventListener('click', checkGuess);
 
+      // Enter key keycode is 13
+      guessField.addEventListener("keyup", function(event) {
+        console.log(event.keyCode)
+        if (event.keyCode === 13) {
+         event.preventDefault();
+         guessSubmit.click();
+        }
+      });
+
+
+
       function setGameOver() {
         guessField.disabled = true;
         guessSubmit.disabled = true;
@@ -55,6 +66,7 @@ console.log(randomNumber)
       function resetGame() {
         guessCount = 1;
         const resetParas = document.querySelectorAll('.resultParas p');  //selects all the paras in the div(resultparas)
+        console.log(typeof resetParas)
         for(let i = 0 ; i < resetParas.length ; i++) {
           resetParas[i].textContent = '';
         }
@@ -64,6 +76,6 @@ console.log(randomNumber)
         guessSubmit.disabled = false;
         guessField.value = '';
         guessField.focus();
-        lastResult.style.backgroundColor = 'white';
+        lastResult.style.backgroundColor = 'transparent';
         randomNumber = Math.floor(Math.random() * 100) + 1;
       }
